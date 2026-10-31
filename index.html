@@ -106,4 +106,42 @@ const a=e.target.closest('a[href]');
 if(!a)return;
 try{const url=new URL(a.href,location.href);if(url.hostname==='heartsidestitch.etsy.com'&&typeof gtag==='function'){gtag('event','etsy_buy_click',{product_name:document.getElementById('modal-title')?.textContent||'',destination_url:url.href})}}catch(err){}
 });
+</script><style>
+#state-signup{display:none;position:fixed;inset:0;z-index:999;background:#102039aa;align-items:center;justify-content:center;padding:18px}
+#state-signup.visible{display:flex}
+#state-signup .signup-card{background:#faf9f5;color:#142b50;max-width:440px;width:100%;padding:34px;position:relative;text-align:center;box-shadow:0 20px 70px #0005}
+#state-signup h2{font-size:30px;line-height:1.1;margin:10px 0}
+#state-signup p{font-size:14px;line-height:1.6}
+#state-signup select,#state-signup input[type=email]{width:100%;padding:12px;margin:7px 0;border:1px solid #c5c9cd;background:white}
+#state-signup .signup-submit{background:#bf3c42;color:white;border:0;padding:14px;width:100%;font-weight:bold;margin-top:10px}
+#state-signup .signup-close{position:absolute;right:12px;top:8px;border:0;background:transparent;font-size:26px}
+#state-signup .signup-consent{font-size:12px;display:flex;text-align:left;gap:9px;line-height:1.5;margin:12px 0}
+</style>
+<div id="state-signup" aria-hidden="true">
+<div class="signup-card" role="dialog" aria-modal="true" aria-labelledby="signup-title">
+<button type="button" class="signup-close" aria-label="Close signup">×</button>
+<div class="eyebrow">Heartside Stitch</div>
+<h2 id="signup-title">Where Should We Stitch Next?</h2>
+<p>Vote for your state and get first access to new destination-inspired embroidered shirts.</p>
+<form action="https://formsubmit.co/2d9cae88af77aaf52a94ca20fe54136f" method="POST">
+<input type="hidden" name="_subject" value="Heartside Stitch state vote and email signup">
+<input type="hidden" name="form_type" value="State vote and newsletter signup">
+<select name="state" aria-label="Choose your state" required><option value="">Choose your state</option><option>New York</option><option>Colorado</option><option>California</option><option>Florida</option><option>Tennessee</option><option>North Carolina</option><option>Texas</option><option>South Carolina</option><option>Georgia</option><option>Virginia</option><option>Other</option></select>
+<input type="email" name="email" placeholder="Your email address" aria-label="Email address" required>
+<label class="signup-consent"><input type="checkbox" name="marketing_consent" value="Yes" required> I agree to receive Heartside Stitch product launches and occasional offers by email. I can unsubscribe at any time.</label>
+<button class="signup-submit" type="submit">Vote &amp; Join the List</button>
+</form>
+<button type="button" class="signup-dismiss" style="border:0;background:none;text-decoration:underline;color:#526070;margin-top:14px">Maybe later</button>
+</div></div>
+<script>
+(function(){
+const modal=document.getElementById('state-signup');
+function dismiss(){modal.classList.remove('visible');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';try{localStorage.setItem('heartside_signup_dismissed',String(Date.now()))}catch(e){}}
+modal.querySelector('.signup-close').addEventListener('click',dismiss);
+modal.querySelector('.signup-dismiss').addEventListener('click',dismiss);
+modal.addEventListener('click',function(e){if(e.target===modal)dismiss()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('visible'))dismiss()});
+let last=0;try{last=Number(localStorage.getItem('heartside_signup_dismissed')||0)}catch(e){}
+if(Date.now()-last>7*86400000)setTimeout(function(){modal.classList.add('visible');modal.setAttribute('aria-hidden','false');document.body.style.overflow=''},4500);
+})();
 </script></body></html>
