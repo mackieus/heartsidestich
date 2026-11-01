@@ -36,6 +36,21 @@ export default {
   });
   const response=await result.json().catch(()=>({}));
   if(!result.ok) return json({error:'Square sandbox payment failed',details:(response.errors||[]).map(e=>({code:e.code,category:e.category,field:e.field||null,detail:typeof e.detail==='string'?e.detail.slice(0,300).replace(/(?:Bearer\s+)?(?:EAAA|sandbox-sq0atb-|cnon:)[^\s,;]+/gi,'[redacted]'):null}))},502);
-  return json({status:response.payment?.status,paymentId:response.payment?.id,amountCents:amount,merchandiseCents,shippingCents:SHIPPING_CENTS,taxCents:null,environment:'sandbox'});
+  const payment=response.payment;
+  if(!payment?.id || !payment?.status) return json({error:'Square returned an incomplete payment response'},502);
+  // D1 is optional during migration; never claim that an order was stored when it was not.
+  let orderStored=false;
+  let orderStorageStatus=env.ORDERS_DB?'failed':'not_configured';
+  if(env.ORDERS_DB && payment.status==='COMPLETED'){
+   try{
+    await env.ORDERS_DB.prepare(
+     'INSERT OR IGNORE INTO orders (id,square_payment_id,environment,payment_status,items_json,merchandise_cents,shipping_cents,tax_cents,total_cents) VALUES (?,?,?,?,?,?,?,?,?)'
+    ).bind(crypto.randomUUID(),payment.id,'sandbox',payment.status,JSON.stringify(items),merchandiseCents,SHIPPING_CENTS,null,amount).run();
+    const row=await env.ORDERS_DB.prepare('SELECT id FROM orders WHERE square_payment_id=?').bind(payment.id).first();
+    orderStored=!!row;
+    orderStorageStatus=orderStored?'stored':'failed';
+   }catch(e){console.error('Sandbox order storage failed',e?.message||'unknown')}
+  }
+  return json({status:payment.status,paymentId:payment.id,amountCents:amount,merchandiseCents,shippingCents:SHIPPING_CENTS,taxCents:null,environment:'sandbox',orderStored,orderStorageStatus});
  }
 };
