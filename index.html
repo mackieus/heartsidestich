@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded',()=>{
    const items=[...counts].map(([key,quantity])=>{const [name,size]=key.split('|');return {name,size,quantity}});
    const response=await fetch(HS_WORKER+'/api/sandbox-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sourceId:result.token,idempotencyKey:crypto.randomUUID(),items})});
    const data=await response.json();
-   if(!response.ok)throw Error(data.error||'Sandbox payment failed');
+   if(!response.ok){const codes=Array.isArray(data.details)?data.details.map(e=>e.code).filter(Boolean).join(', '):'';throw Error((data.error||'Sandbox payment failed')+(codes?' — Square code: '+codes:''));}
    status.textContent='Sandbox payment '+data.status+' — $'+(data.amountCents/100).toFixed(2)+' — ID: '+data.paymentId;
   }catch(e){status.textContent='Sandbox test failed: '+e.message}finally{button.disabled=false}
  });
