@@ -33,7 +33,7 @@ export default {
    body:JSON.stringify({source_id:body.sourceId,idempotency_key:body.idempotencyKey,location_id:env.SQUARE_SANDBOX_LOCATION_ID,amount_money:{amount,currency:'USD'},autocomplete:true,note:'SANDBOX ONLY Heartside Stitch: '+items.map(i=>i.quantity+'x '+i.name+' '+i.size).join('; ').slice(0,400)})
   });
   const response=await result.json().catch(()=>({}));
-  if(!result.ok) return json({error:'Square sandbox payment failed',details:(response.errors||[]).map(e=>({code:e.code,category:e.category}))},502);
+  if(!result.ok) return json({error:'Square sandbox payment failed',details:(response.errors||[]).map(e=>({code:e.code,category:e.category,field:e.field||null,detail:typeof e.detail==='string'?e.detail.slice(0,300).replace(/(?:Bearer\s+)?(?:EAAA|sandbox-sq0atb-|cnon:)[^\s,;]+/gi,'[redacted]'):null}))},502);
   return json({status:response.payment?.status,paymentId:response.payment?.id,amountCents:amount,environment:'sandbox'});
  }
 };
