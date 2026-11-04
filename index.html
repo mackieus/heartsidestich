@@ -69,7 +69,7 @@ h1 em{color:var(--red);font-style:italic}
 <footer><div class="shell footer-row"><div class="brand"><img class="brand-logo" src="heartside-logo.png" alt="Heart Side Stitch embroidered thread and heart logo"> <span class="brand-wordmark">HEART SIDE <small>STITCH</small></span></div><div class="footer-links"><a href="#destinations">Destinations</a><a href="#collection">Collection</a><a href="#wholesale">Wholesale</a></div><div class="footer-small">© <span id="year"></span> Heart Side Stitch · Apparel that brings your heart closer to home.</div></div></footer>
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <script>
-// Product listings: Square checkout for Cardinal; other products retain existing Etsy links until Square links are provided.
+// Product listings: Raleigh and Outer Banks retain Etsy Buy Now links until on-site Square checkout is enabled for all products; North Carolina Buy Now is hidden until it is restocked.
 const PRODUCTS=[
  {state:'NC',name:'North Carolina Cardinal Embroidered Tee',place:'North Carolina · Navy · Left-chest embroidery · $24.99',art:'NORTH CAROLINA',color:'navy',image:'nc-shirt-front.JPG',images:['nc-shirt-front.JPG','nc-shirt-folded.JPG','nc-embroidery-detail.JPG'],url:'',price:'$24.99'},
  {state:'NC',name:'Raleigh Acorn Embroidered Tee',place:'Raleigh, NC · Forest green · Left-chest embroidery · $24.99',art:'RALEIGH',color:'',image:'raleigh-shirt-front.jpg.jpeg',images:['raleigh-shirt-front.jpg.jpeg','raleigh-shirt-folded.jpg.jpeg','raleigh-embroidery-detail.jpg.jpeg'],url:'https://heartsidestitch.etsy.com/listing/4599832857',price:'$24.99'},
@@ -155,15 +155,16 @@ if(Date.now()-last>7*86400000)setTimeout(function(){modal.classList.add('visible
 })();
 </script>
 <div class="hs-cart-panel" id="hs-cart-panel" role="dialog" aria-modal="true" aria-label="Your cart">
- <div class="hs-cart-dialog"><button type="button" onclick="hsToggleCart(false)" style="float:right;border:0;background:none;font-size:25px" aria-label="Close cart">×</button><h2>Your Cart</h2><div id="hs-cart-items"></div><p id="hs-cart-total"></p><p style="font-size:13px;color:#555">Secure Square checkout is being connected. No payment will be collected here yet.</p><button class="hs-cart-btn" id="hs-checkout-placeholder" type="button" disabled style="opacity:.55;cursor:not-allowed">Checkout coming soon</button><section id="hs-sandbox-checkout" hidden><h3>Square Sandbox Test Checkout</h3><p style="font-size:13px">TEST ONLY — no real charges or orders. Merchandise subtotal excludes shipping and tax.</p><form id="hs-shipping-form" style="display:grid;gap:8px;margin:14px 0"><label>Full name <input name="fullName" autocomplete="name" required maxlength="100" style="width:100%;padding:9px"></label><label>Email <input name="email" type="email" autocomplete="email" required maxlength="254" style="width:100%;padding:9px"></label><label>Street address <input name="address1" autocomplete="shipping address-line1" required maxlength="120" style="width:100%;padding:9px"></label><label>Apartment / suite (optional) <input name="address2" autocomplete="shipping address-line2" maxlength="120" style="width:100%;padding:9px"></label><label>City <input name="city" autocomplete="shipping address-level2" required maxlength="80" style="width:100%;padding:9px"></label><label>State <input name="state" autocomplete="shipping address-level1" required maxlength="2" minlength="2" placeholder="NC" style="width:100%;padding:9px"></label><label>ZIP code <input name="postalCode" autocomplete="shipping postal-code" required pattern="[0-9]{5}(-[0-9]{4})?" placeholder="27601" style="width:100%;padding:9px"></label><p style="font-size:12px">Sandbox preview only. Shipping rates, sales tax, and order storage are not yet configured. Do not enter real customer information.</p></form><div id="hs-sandbox-breakdown" style="margin:12px 0;font-weight:600" aria-live="polite"></div><div id="hs-square-card"></div><button class="hs-cart-btn" id="hs-sandbox-pay" type="button">Run Sandbox Payment</button><p id="hs-sandbox-status" role="status"></p></section></div>
+ <div class="hs-cart-dialog"><button type="button" onclick="hsToggleCart(false)" style="float:right;border:0;background:none;font-size:25px" aria-label="Close cart">×</button><h2>Your Cart</h2><div id="hs-cart-items"></div><p id="hs-cart-total"></p><p style="font-size:13px;color:#555">Production Square checkout is disabled until production Square IDs and the production Worker secret are configured. No payment will be collected here yet.</p><button class="hs-cart-btn" id="hs-checkout-placeholder" type="button" disabled style="opacity:.55;cursor:not-allowed">Checkout coming soon</button><section id="hs-sandbox-checkout" hidden><h3>Square Sandbox Test Checkout</h3><p style="font-size:13px">TEST ONLY — no real charges or orders. Merchandise subtotal excludes shipping and tax.</p><form id="hs-shipping-form" style="display:grid;gap:8px;margin:14px 0"><label>Full name <input name="fullName" autocomplete="name" required maxlength="100" style="width:100%;padding:9px"></label><label>Email <input name="email" type="email" autocomplete="email" required maxlength="254" style="width:100%;padding:9px"></label><label>Street address <input name="address1" autocomplete="shipping address-line1" required maxlength="120" style="width:100%;padding:9px"></label><label>Apartment / suite (optional) <input name="address2" autocomplete="shipping address-line2" maxlength="120" style="width:100%;padding:9px"></label><label>City <input name="city" autocomplete="shipping address-level2" required maxlength="80" style="width:100%;padding:9px"></label><label>State <input name="state" autocomplete="shipping address-level1" required maxlength="2" minlength="2" placeholder="NC" style="width:100%;padding:9px"></label><label>ZIP code <input name="postalCode" autocomplete="shipping postal-code" required pattern="[0-9]{5}(-[0-9]{4})?" placeholder="27601" style="width:100%;padding:9px"></label><p style="font-size:12px">Sandbox preview only. Shipping rates, sales tax, and order storage are not yet configured. Do not enter real customer information.</p></form><div id="hs-sandbox-breakdown" style="margin:12px 0;font-weight:600" aria-live="polite"></div><div id="hs-square-card"></div><button class="hs-cart-btn" id="hs-sandbox-pay" type="button">Run Sandbox Payment</button><p id="hs-sandbox-status" role="status"></p></section><section id="hs-production-checkout" hidden><h3>Square Checkout</h3><p style="font-size:13px">$24.99 per shirt. Flat shipping: $4.95 per order. No sales tax for now.</p><form id="hs-production-shipping-form" style="display:grid;gap:8px;margin:14px 0"><label>Full name <input name="fullName" autocomplete="name" required maxlength="100" style="width:100%;padding:9px"></label><label>Email <input name="email" type="email" autocomplete="email" required maxlength="254" style="width:100%;padding:9px"></label><label>Street address <input name="address1" autocomplete="shipping address-line1" required maxlength="120" style="width:100%;padding:9px"></label><label>Apartment / suite (optional) <input name="address2" autocomplete="shipping address-line2" maxlength="120" style="width:100%;padding:9px"></label><label>City <input name="city" autocomplete="shipping address-level2" required maxlength="80" style="width:100%;padding:9px"></label><label>State <input name="state" autocomplete="shipping address-level1" required maxlength="2" minlength="2" placeholder="NC" style="width:100%;padding:9px"></label><label>ZIP code <input name="postalCode" autocomplete="shipping postal-code" required pattern="[0-9]{5}(-[0-9]{4})?" placeholder="27601" style="width:100%;padding:9px"></label></form><div id="hs-production-breakdown" style="margin:12px 0;font-weight:600" aria-live="polite"></div><div id="hs-production-card"></div><button class="hs-cart-btn" id="hs-production-pay" type="button">Pay securely</button><p id="hs-production-status" role="status"></p></section></div>
 </div>
 <button id="hs-cart-bar" class="hs-cart-bar" type="button" onclick="hsToggleCart(true)">Cart (0)</button>
 <script>
 const hsCart=[];
-function hsAddToCart(name,size){hsCart.push({name,size,price:24.99});hsRenderCart();hsToggleCart(true)}
+function hsAddToCart(name,size){if(!size){alert('Please select a size.');return}hsCart.push({name,size,price:24.99});hsRenderCart();hsToggleCart(true)}
 function hsToggleCart(open){document.getElementById('hs-cart-panel').classList.toggle('open',open)}
 function hsUpdateSandboxBreakdown(){const el=document.getElementById('hs-sandbox-breakdown');if(el){const subtotal=hsCart.length*24.99;el.textContent='Shirts: $'+subtotal.toFixed(2)+' + Flat shipping: $5.99 = Sandbox total: $'+(subtotal+5.99).toFixed(2)+' (tax not included)';}}
-function hsRenderCart(){hsUpdateSandboxBreakdown();document.getElementById('hs-cart-bar').textContent='Cart ('+hsCart.length+')';const wrap=document.getElementById('hs-cart-items');wrap.replaceChildren();hsCart.forEach((item,i)=>{const row=document.createElement('div');row.className='hs-cart-row';const label=document.createElement('span');label.textContent=item.name+' — '+item.size+' — $24.99';const remove=document.createElement('button');remove.type='button';remove.textContent='Remove';remove.onclick=()=>{hsCart.splice(i,1);hsRenderCart()};row.append(label,remove);wrap.append(row)});document.getElementById('hs-cart-total').textContent='Subtotal: $'+(hsCart.length*24.99).toFixed(2)}
+function hsUpdateProductionBreakdown(){const el=document.getElementById('hs-production-breakdown');if(el){const subtotal=hsCart.length*24.99;el.textContent='Shirts: $'+subtotal.toFixed(2)+' + Flat shipping: $4.95 + Tax: $0.00 = Total: $'+(subtotal+4.95).toFixed(2);}}
+function hsRenderCart(){hsUpdateSandboxBreakdown();hsUpdateProductionBreakdown();document.getElementById('hs-cart-bar').textContent='Cart ('+hsCart.length+')';const wrap=document.getElementById('hs-cart-items');wrap.replaceChildren();hsCart.forEach((item,i)=>{const row=document.createElement('div');row.className='hs-cart-row';const label=document.createElement('span');label.textContent=item.name+' — '+item.size+' — $24.99';const remove=document.createElement('button');remove.type='button';remove.textContent='Remove';remove.onclick=()=>{hsCart.splice(i,1);hsRenderCart()};row.append(label,remove);wrap.append(row)});document.getElementById('hs-cart-total').textContent='Subtotal: $'+(hsCart.length*24.99).toFixed(2)}
 function hsAttachSelectors(){document.querySelectorAll('.product-card').forEach(()=>{});const modal=document.querySelector('.modal-info');if(modal&&!document.getElementById('hs-size')){const selector=document.createElement('select');selector.id='hs-size';selector.className='hs-size';selector.setAttribute('aria-label','Select shirt size');selector.innerHTML='<option value="">Select size</option><option>S</option><option>M</option><option>L</option>';const add=document.createElement('button');add.className='hs-cart-btn';add.type='button';add.textContent='Add to cart';add.onclick=()=>{if(!activeProduct)return;if(!selector.value){alert('Please select a size.');return}hsAddToCart(activeProduct.name,selector.value)};const order=document.getElementById('modal-order');order.parentNode.insertBefore(selector,order);order.parentNode.insertBefore(add,order);order.style.display='block';order.style.marginTop='12px';const observer=new MutationObserver(()=>{selector.value=''});observer.observe(document.getElementById('modal-title'),{childList:true})}}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',hsAttachSelectors);else hsAttachSelectors();
 </script>
@@ -203,15 +204,73 @@ document.addEventListener('DOMContentLoaded',()=>{
    const response=await fetch(HS_WORKER+'/api/sandbox-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sourceId:result.token,idempotencyKey:crypto.randomUUID(),items})});
    const data=await response.json();
    if(!response.ok){const codes=Array.isArray(data.details)?data.details.map(e=>e.code).filter(Boolean).join(', '):'';throw Error((data.error||'Sandbox payment failed')+(codes?' — Square code: '+codes:''));}
-   status.textContent='Sandbox payment '+data.status+' — 
+   status.textContent='Sandbox payment '+data.status+' — $'+(data.amountCents/100).toFixed(2)+' — ID: '+data.paymentId+' — Order record: '+(data.orderStored?'saved':data.orderStorageStatus==='not_configured'?'database not connected':'not saved');
   }catch(e){status.textContent='Sandbox test failed: '+e.message}finally{button.disabled=false}
  });
 });
 </script>
-</body></html>
-+(data.amountCents/100).toFixed(2)+' — ID: '+data.paymentId+' — Order record: '+(data.orderStored?'saved':data.orderStorageStatus==='not_configured'?'database not connected':'not saved');
-  }catch(e){status.textContent='Sandbox test failed: '+e.message}finally{button.disabled=false}
- });
+
+<script>
+// Production Square checkout — READY TO FLIP, NOT LIVE BY DEFAULT.
+// To enable: set HS_PRODUCTION_ENABLED to true, replace the placeholder
+// app/location IDs below, deploy square-worker/src/production.js as a
+// separate Cloudflare Worker, set its SQUARE_ACCESS_TOKEN secret (never
+// in this repo or in chat), and set HS_PRODUCTION_WORKER to that Worker URL.
+// Until then, the production section stays hidden and no real payment
+// is collected. Database order storage is deferred; the Worker returns a
+// structured order record that can be saved to D1 later without changing
+// this frontend. Square receipts and seller notifications are the
+// launch-time order record, plus the optional EMAIL_WEBHOOK_URL hook.
+const HS_PRODUCTION_ENABLED=false;
+const HS_PRODUCTION_APP_ID='REPLACE_WITH_PRODUCTION_SQUARE_APP_ID';
+const HS_PRODUCTION_LOCATION_ID='REPLACE_WITH_PRODUCTION_SQUARE_LOCATION_ID';
+const HS_PRODUCTION_WORKER='https://heartside-square-production.REPLACE_WITH_YOUR_SUBDOMAIN.workers.dev';
+const HS_PRODUCTION_SHIPPING_CENTS=495;
+let hsProductionCard=null;
+async function hsInitializeProduction(){
+  const section=document.getElementById('hs-production-checkout');
+  const placeholder=document.getElementById('hs-checkout-placeholder');
+  const status=document.getElementById('hs-production-status');
+  if(!HS_PRODUCTION_ENABLED){return}
+  if(!HS_PRODUCTION_APP_ID||HS_PRODUCTION_APP_ID.indexOf('REPLACE_WITH')===0||!HS_PRODUCTION_LOCATION_ID||HS_PRODUCTION_LOCATION_ID.indexOf('REPLACE_WITH')===0){
+    section.hidden=false;placeholder.hidden=true;status.textContent='Production checkout is not configured yet. Replace the placeholder Square IDs and deploy the production Worker first.';document.getElementById('hs-production-pay').disabled=true;return
+  }
+  section.hidden=false;placeholder.hidden=true;hsUpdateProductionBreakdown();
+  try{
+    if(!window.Square)throw Error('Square production SDK did not load');
+    const payments=window.Square.payments(HS_PRODUCTION_APP_ID,HS_PRODUCTION_LOCATION_ID);
+    hsProductionCard=await payments.card();
+    await hsProductionCard.attach('#hs-production-card');
+  }catch(e){status.textContent='Production card form unavailable: '+e.message;document.getElementById('hs-production-pay').disabled=true}
+}
+function hsLoadProductionSdk(){
+  return new Promise((resolve,reject)=>{
+    if(window.Square&&HS_PRODUCTION_ENABLED){resolve();return}
+    const s=document.createElement('script');s.src='https://web.squarecdn.com/v1/square.js';s.onload=()=>resolve();s.onerror=()=>reject(new Error('Square production SDK did not load'));document.head.appendChild(s);
+  });
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  if(!HS_PRODUCTION_ENABLED)return;
+  hsLoadProductionSdk().then(()=>hsInitializeProduction()).catch(e=>{const st=document.getElementById('hs-production-status');if(st)st.textContent=e.message});
+  document.getElementById('hs-production-pay').addEventListener('click',async()=>{
+    const button=document.getElementById('hs-production-pay'),status=document.getElementById('hs-production-status');
+    if(!hsProductionCard||!hsCart.length){status.textContent='Add at least one shirt to your cart first.';return}
+    const shippingForm=document.getElementById('hs-production-shipping-form');if(!shippingForm.reportValidity()){status.textContent='Complete the shipping details to continue.';return}
+    button.disabled=true;status.textContent='Processing payment…';
+    try{
+      const result=await hsProductionCard.tokenize();
+      if(result.status!=='OK')throw Error('Card tokenization failed: '+result.status);
+      const counts=new Map();
+      for(const item of hsCart){const key=item.name+'|'+item.size;counts.set(key,(counts.get(key)||0)+1)}
+      const items=[...counts].map(([key,quantity])=>{const [name,size]=key.split('|');return {name,size,quantity}});
+      const buyer=Object.fromEntries(new FormData(shippingForm).entries());
+      const response=await fetch(HS_PRODUCTION_WORKER+'/api/payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sourceId:result.token,idempotencyKey:crypto.randomUUID(),items,buyer})});
+      const data=await response.json();
+      if(!response.ok)throw Error(data.error||'Payment failed');
+      status.textContent='Thank you! Payment '+data.status+' — $'+(data.amountCents/100).toFixed(2)+' — ID: '+data.paymentId+'. A Square receipt has been emailed to '+buyer.email+'.';
+      hsCart.length=0;hsRenderCart();
+    }catch(e){status.textContent='Payment failed: '+e.message}finally{button.disabled=false}
+  });
 });
 </script>
 </body></html>
