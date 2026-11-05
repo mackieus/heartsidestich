@@ -50,7 +50,7 @@ export default {
    method:'POST',headers:{'Authorization':'Bearer '+env.SQUARE_ACCESS_TOKEN,'Content-Type':'application/json','Square-Version':'2026-09-16'},
    body:JSON.stringify({source_id:body.sourceId,idempotency_key:body.idempotencyKey,location_id:env.SQUARE_LOCATION_ID,amount_money:{amount,currency:'USD'},autocomplete:true,buyer_email_address:buyer.email,note:'Heartside Stitch: '+items.map(i=>i.quantity+'x '+i.name+' '+i.size).join('; ').slice(0,400)})
   });
-  const response=await result.json().catch(()=>({}));
+  const response=await result.json().catch(function(){return{}});
   if(!result.ok) return json({error:'Square payment failed',details:(response.errors||[]).map(e=>({code:e.code,category:e.category,field:e.field||null,detail:typeof e.detail==='string'?e.detail.slice(0,300).replace(/(?:Bearer\s+)?(?:EAAA|sq0atp-|cnon:)[^\s,;]+/gi,'[redacted]'):null}))},502);
   const payment=response.payment;
   if(!payment?.id || !payment?.status) return json({error:'Square returned an incomplete payment response'},502);
