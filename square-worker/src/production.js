@@ -12,16 +12,18 @@ const SIZES = new Set(['S','M','L']);
 const UNIT_PRICE_CENTS = 2499;
 const SHIPPING_CENTS = 495;
 const TAX_CENTS = 0;
-const ORIGIN = 'https://heartsidestitch.com';
-const headers = {'Access-Control-Allow-Origin':ORIGIN,'Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type','Vary':'Origin','Content-Type':'application/json','Cache-Control':'no-store'};
+const ALLOWED_ORIGINS = new Set(['https://heartsidestitch.com','https://www.heartsidestitch.com']);
+const corsHeaders = (origin) => ({'Access-Control-Allow-Origin': ALLOWED_ORIGINS.has(origin) ? origin : 'https://heartsidestitch.com','Access-Control-Allow-Methods':'POST, OPTIONS, GET','Access-Control-Allow-Headers':'Content-Type','Vary':'Origin','Content-Type':'application/json','Cache-Control':'no-store'});
+const headers = corsHeaders('https://heartsidestitch.com');
 const json = (data,status=200) => new Response(JSON.stringify(data),{status,headers});
 const isEmail = (s) => typeof s === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
 export default {
  async fetch(request,env){
   const origin=request.headers.get('Origin');
-  if(origin && origin!==ORIGIN) return json({error:'Origin not allowed'},403);
+  const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:corsHeaders(origin)});
+  if(origin && !ALLOWED_ORIGINS.has(origin)) return json({error:'Origin not allowed'},403);
   const url=new URL(request.url);
-  if(request.method==='OPTIONS') return new Response(null,{status:204,headers});
+  if(request.method==='OPTIONS') return new Response(null,{status:204,headers:corsHeaders(origin)});
   if(url.pathname==='/health' && request.method==='GET') return json({status:'ok',environment:'production'});
   if(url.pathname!=='/api/payment' || request.method!=='POST') return json({error:'Not found'},404);
   if(!env.SQUARE_ACCESS_TOKEN || !env.SQUARE_LOCATION_ID) return json({error:'Production backend not configured'},503);
