@@ -221,10 +221,10 @@ document.addEventListener('DOMContentLoaded',()=>{
 // structured order record that can be saved to D1 later without changing
 // this frontend. Square receipts and seller notifications are the
 // launch-time order record, plus the optional EMAIL_WEBHOOK_URL hook.
-const HS_PRODUCTION_ENABLED=false;
+const HS_PRODUCTION_ENABLED=true;
 const HS_PRODUCTION_APP_ID='sq0idp-Jy0UUNTvB_tWeMb0Rb-v5g';
 const HS_PRODUCTION_LOCATION_ID='LPCV122D';
-const HS_PRODUCTION_WORKER='https://heartside-square-production.REPLACE_WITH_YOUR_SUBDOMAIN.workers.dev';
+const HS_PRODUCTION_WORKER='https://heartside-square-production.heartsidestitch.workers.dev';
 const HS_PRODUCTION_SHIPPING_CENTS=495;
 let hsProductionCard=null;
 async function hsInitializeProduction(){
