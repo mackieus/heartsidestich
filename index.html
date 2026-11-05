@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       if(!response.ok)throw Error(data.error||'Payment failed');
       status.textContent='Thank you! Payment '+data.status+' — $'+(data.amountCents/100).toFixed(2)+' — ID: '+data.paymentId+'. A Square receipt has been emailed to '+buyer.email+'.';
       hsCart.length=0;hsRenderCart();
-    }catch(e){const msg=e.message||'';status.textContent=(msg.includes('Failed to fetch')||msg.includes('Load failed')||e.name==='TypeError')?('Payment failed: could not reach the checkout server — please check your connection, try a different browser or network, and try again. No charge was made. ('+msg+')'):'Payment failed: '+msg}finally{button.disabled=false}
+    }catch(e){const msg=e.message||'';status.textContent=(msg.includes('Failed to fetch')||msg.includes('Load failed')||e.name==='TypeError')?('Payment could not be confirmed — please check Square and your bank before trying again. Do not retry yet: a charge may have gone through even though no confirmation was received. ('+msg+')'):'Payment failed: '+msg}finally{button.disabled=false}
   });
 });
 </script>
