@@ -4,7 +4,7 @@ compatibility_date = "2026-10-01"
 workers_dev = true
 
 [vars]
-SQUARE_LOCATION_ID = "LPCV122D"
+SQUARE_LOCATION_ID = "LPCV122D2Z4HK"
 # Secrets (set via `npx wrangler secret put`, never in this repo):
 # SQUARE_ACCESS_TOKEN — production Square access token
 # EMAIL_WEBHOOK_URL — optional order-summary webhook for seller email
